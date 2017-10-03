@@ -14,7 +14,7 @@ Vector2* Vector2::add(Vector2 vec) {
     return this;
 }
 
-Vector2* Vector2::scalar(int scal) {
+Vector2* Vector2::scalar(double scal) {
     this->x *= scal;
     this->y *= scal;
     return this;

@@ -10,9 +10,9 @@ class Vehicle {
 private:
     Vector2 coords;
     Vector2 speed;
-    int maxSpeed;
+    int maxSpeed = 20;
     Vector2 force;
-    int maxForce;
+    int maxForce = 10;
     sf::Color color = sf::Color(42, 142, 242, 255);
     sf::Color fgColor;
     int radius = 6;
@@ -25,6 +25,7 @@ public:
 
     Vector2 steerPathFollow(const Track* track);
 
+    void update(Track *track, std::vector<Vehicle*> vehicles);
     void draw(sf::RenderWindow* window);
 
     void steerSeparation(Vehicle vehicles[]);

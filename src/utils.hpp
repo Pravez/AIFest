@@ -18,7 +18,7 @@ public:
 
     Vector2* diff(Vector2 vec);
     Vector2* add(Vector2 vec);
-    Vector2* scalar(int scal);
+    Vector2* scalar(double scal);
     double dot(Vector2 vec) const;
     Vector2* inter(int scalar, Vector2 vec);
     double approximateLength() const;

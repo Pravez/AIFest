@@ -13,7 +13,7 @@
 
 class Scene {
 private:
-    std::vector<Vehicle> vehicles;
+    std::vector<Vehicle*> vehicles;
     Track track;
 
 public:

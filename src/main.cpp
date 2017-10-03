@@ -14,6 +14,9 @@ int main(int argc, char **argv) {
 
     Scene scene(vectors, 5);
 
+    window.setFramerateLimit(30);
+    window.setVerticalSyncEnabled(true);
+
     while(window.isOpen()){
         sf::Event event;
 

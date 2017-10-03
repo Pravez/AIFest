@@ -10,7 +10,7 @@ Vector2 Vehicle::steerPathFollow(const Track *track) {
                                                               this->speed.approximateLength()) *
                                                           this->seeInFuture));
     Vector2 force = Vector2::diff(futurePositionAndSegment.point, this->coords);
-    force.scalar(static_cast<int>(this->maxForce / force.approximateLength()));
+    force.scalar(this->maxForce / force.approximateLength());
     return force;
 }
 
@@ -24,6 +24,12 @@ void Vehicle::draw(sf::RenderWindow *window) {
 }
 
 Vehicle::~Vehicle() {
+}
+
+void Vehicle::update(Track *track, std::vector<Vehicle*> vehicles) {
+    this->force = Vector2(0, 0);
+    this->force.add(this->steerPathFollow(track));
+    // this->steerSeparation(vehicles);
 }
 
 
