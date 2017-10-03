@@ -50,7 +50,7 @@ double Vector2::getX() const {
     return x;
 }
 
-void Vector2::setX(int x) {
+void Vector2::setX(double x) {
     Vector2::x = x;
 }
 
@@ -58,7 +58,7 @@ double Vector2::getY() const {
     return y;
 }
 
-void Vector2::setY(int y) {
+void Vector2::setY(double y) {
     Vector2::y = y;
 }
 
@@ -70,4 +70,11 @@ Vector2 Vector2::getPerpendicular() const {
     return Vector2(this->y, - this->x);
 }
 
+Vector2 Vector2::scalar(Vector2 v1, double scalar) {
+    return Vector2(v1.x * scalar, v1.y * scalar);
+}
 
+
+double max(double first, double second) {
+    return first > second ? first : second;
+}

@@ -20,8 +20,13 @@ public:
     Scene(Vector2 circuit[], int size);
     ~Scene();
 
-    void draw(sf::RenderWindow* window);
+    void addVehicle(int x, int y);
 
+    void handleVehiclesCollisions();
+    void updateVehiclesPositions();
+
+    void update();
+    void draw(sf::RenderWindow* window);
 };
 
 
