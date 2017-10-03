@@ -10,7 +10,7 @@ class Vehicle {
 private:
     Vector2 coords;
     Vector2 speed;
-    int maxSpeed = 20;
+    int maxSpeed = 10;
     Vector2 force;
     int maxForce = 10;
     sf::Color color = sf::Color(42, 142, 242, 255);
