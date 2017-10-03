@@ -9,7 +9,7 @@ Track::Track(Vector2 circuit[], int size) {
 
     for (int i = 0; i < size; i++) {
         this->circuit.push_back(circuit[i]);
-        this->cachedNormal.push_back(Vector2::diff(circuit[i], i - 1 < 0 ? circuit[size] : circuit[i - 1]));
+        this->cachedNormal.push_back(Vector2::diff(circuit[i], i - 1 < 0 ? circuit[size-1] : circuit[i - 1]));
         this->cachedLength.push_back(this->cachedNormal[i].approximateLength());
         this->cachedNormal[i] = Vector2(this->cachedNormal[i].getX() / this->cachedLength[i],
                                         this->cachedNormal[i].getY() / this->cachedLength[i]);
@@ -23,10 +23,6 @@ Track::~Track() {
 void Track::draw(sf::RenderWindow *window) {
     sf::CircleShape edge;
     edge.setFillColor(this->backColor);
-
-    sf::ConvexShape convex;
-    convex.setPointCount(4);
-    convex.setFillColor(this->backColor);
 
     for (int i = 0; i < this->circuit.size(); i++) {
         edge.setPosition(Vector2(this->circuit[i]).diff(Vector2(this->width / 2, this->width / 2))->toVector2f());
@@ -46,7 +42,7 @@ void Track::draw(sf::RenderWindow *window) {
 }
 
 SegmentAndPoint Track::segmentPointAddLength(int segment, Vector2 point, int length) const {
-    double nextStep = this->circuit[segment].approximateDistanceWith(point);
+    double nextStep = point.approximateDistanceWith(this->circuit[segment]);
     Vector2 nextPoint;
 
     if (nextStep > length) {
@@ -66,7 +62,7 @@ SegmentAndPoint Track::segmentPointAddLength(int segment, Vector2 point, int len
 }
 
 PredictivePosition Track::closestSegmentPointToPoint(Vector2 point) const {
-    int bestSegment = 0;
+    int bestSegment = -1;
     Vector2 bestPoint, temp;
     double bestLength = -1, l;
 

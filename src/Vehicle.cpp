@@ -20,7 +20,13 @@ void Vehicle::draw(sf::RenderWindow *window) {
     shape.setPosition(this->coords.toVector2f());
     shape.setRadius(this->radius);
 
+    sf::Vertex line[] = {
+            sf::Vertex(Vector2::diff(this->coords, Vector2(this->radius/2, this->radius/2)).toVector2f()),
+            sf::Vertex(Vector2::add(this->speed, this->coords).scalar(1)->toVector2f())
+    };
+
     window->draw(shape);
+    window->draw(line, 2, sf::Lines);
 }
 
 Vehicle::~Vehicle() {
