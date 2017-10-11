@@ -1,7 +1,3 @@
-//
-// Created by howl on 03/10/17.
-//
-
 #ifndef STEERINGSFEST_SCENE_HPP
 #define STEERINGSFEST_SCENE_HPP
 

@@ -74,6 +74,10 @@ Vector2 Vector2::scalar(Vector2 v1, double scalar) {
     return Vector2(v1.x * scalar, v1.y * scalar);
 }
 
+const Vector2 Vector2::operator=(const Vector2 &operand) {
+    return Vector2(operand.x, operand.y);
+}
+
 
 double max(double first, double second) {
     return first > second ? first : second;

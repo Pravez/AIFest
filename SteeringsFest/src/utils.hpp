@@ -32,6 +32,8 @@ public:
 
     sf::Vector2f toVector2f() const;
 
+    const Vector2 operator=(const Vector2& operand);
+
 };
 
 double max(double first, double second);

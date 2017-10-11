@@ -21,7 +21,7 @@ Scene::~Scene() {
 }
 
 void Scene::update() {
-    for(auto v: vehicles) {
+    for (auto v: vehicles) {
         v->update(&this->track, this->vehicles);
     }
 
@@ -35,29 +35,32 @@ void Scene::handleVehiclesCollisions() {
     double tempCompute;
 
     for (int i = 0; i < this->vehicles.size(); ++i) {
-        for (auto v : this->vehicles) {
-            offset = Vector2::diff(v->getCoords(), this->vehicles[i]->getCoords());
-            approximateLength = offset.approximateLength();
-            if (approximateLength != 0 &&
-                approximateLength < this->vehicles[i]->getRadius() + v->getRadius() - 1) {
-                tempCompute = approximateLength * (this->vehicles[i]->getRadius() + v->getRadius());
-                this->vehicles[i]->setCoords(
-                        Vector2(
-                                this->vehicles[i]->getCoords().getX() + offset.getX() / tempCompute,
-                                this->vehicles[i]->getCoords().getY() + offset.getY() / tempCompute));
+        for (int j = 0; j < this->vehicles.size(); ++j) {
+            if (i != j) {
+                offset = Vector2::diff(this->vehicles[j]->getCoords(), this->vehicles[i]->getCoords());
+                approximateLength = offset.approximateLength();
+                if (approximateLength != 0 &&
+                    approximateLength <= this->vehicles[i]->getRadius() + this->vehicles[j]->getRadius() - 1) {
+                    tempCompute = approximateLength * (this->vehicles[i]->getRadius() + this->vehicles[j]->getRadius());
+                    this->vehicles[i]->setCoords(
+                            Vector2(
+                                    this->vehicles[i]->getCoords().getX() + offset.getX(),
+                                    this->vehicles[i]->getCoords().getY() + offset.getY() / tempCompute));
+                }
             }
         }
     }
 }
 
 void Scene::updateVehiclesPositions() {
-    for(auto v : this->vehicles) {
+    for (auto v : this->vehicles) {
         v->setSpeed(Vector2::add(v->getSpeed(), v->getForce()));
         double approximateLength = v->getSpeed().approximateLength();
         if (approximateLength > v->getMaxSpeed()) {
             v->setSpeed(Vector2::scalar(v->getSpeed(), v->getMaxSpeed() / approximateLength));
         }
-        v->setCoords(Vector2(v->getCoords().getX() + v->getSpeed().getX(), v->getCoords().getY() + v->getSpeed().getY()));
+        v->setCoords(
+                Vector2(v->getCoords().getX() + v->getSpeed().getX(), v->getCoords().getY() + v->getSpeed().getY()));
     }
 
 }
