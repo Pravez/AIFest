@@ -34,6 +34,7 @@ public:
 
     const Vector2 operator=(const Vector2& operand);
 
+    void set(double value);
 };
 
 double max(double first, double second);

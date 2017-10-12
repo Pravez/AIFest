@@ -9,17 +9,18 @@
 
 class AbstractElement {
 private:
-    Vector2 coords;
     sf::Shape* shape;
+    Vector2 coords;
     sf::Color color;
 
 public:
-    AbstractElement(const Vector2& coords = {0, 0}, sf::Color color = sf::Color(255, 255, 0)): coords(coords), color(color);
-    ~AbstractElement();
+    AbstractElement(sf::Shape* shape, const Vector2& coords = {0, 0},
+                    sf::Color color = sf::Color(42, 242, 42)): coords(coords), color(color), shape(shape) {}
 
-    void setShape(sf::Shape* shape) { this->shape = shape; }
+    virtual ~AbstractElement();
+
     void setCoords(const Vector2& coords) { this->coords = coords; }
-    const Vector2& getCoords() const { return this->coords; }
+    virtual const Vector2& getCoords() const { return this->coords; }
     void setColor(const sf::Color& color) { this->color = color; }
 
     virtual void render(sf::RenderWindow* window);

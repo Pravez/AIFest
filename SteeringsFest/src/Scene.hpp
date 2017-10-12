@@ -6,10 +6,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "Vehicle.hpp"
 #include "Track.hpp"
+#include "elements/Boid.hpp"
 
 class Scene {
 private:
-    std::vector<Vehicle*> vehicles;
+    std::vector<Boid*> vehicles;
     Track track;
 
 public:

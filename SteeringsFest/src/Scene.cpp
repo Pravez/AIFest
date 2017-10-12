@@ -8,7 +8,7 @@ void Scene::draw(sf::RenderWindow *window) {
     this->track.draw(window);
 
     for (auto vehicle : this->vehicles) {
-        vehicle->draw(window);
+        vehicle->render(window);
     }
 }
 
@@ -56,8 +56,8 @@ void Scene::updateVehiclesPositions() {
     for (auto v : this->vehicles) {
         v->setSpeed(Vector2::add(v->getSpeed(), v->getForce()));
         double approximateLength = v->getSpeed().approximateLength();
-        if (approximateLength > v->getMaxSpeed()) {
-            v->setSpeed(Vector2::scalar(v->getSpeed(), v->getMaxSpeed() / approximateLength));
+        if (approximateLength > v->MAXSPEED) {
+            v->setSpeed(Vector2::scalar(v->getSpeed(), v->MAXSPEED / approximateLength));
         }
         v->setCoords(
                 Vector2(v->getCoords().getX() + v->getSpeed().getX(), v->getCoords().getY() + v->getSpeed().getY()));
@@ -66,6 +66,6 @@ void Scene::updateVehiclesPositions() {
 }
 
 void Scene::addVehicle(int x, int y) {
-    this->vehicles.push_back(new Vehicle(Vector2(x, y)));
+    this->vehicles.push_back(new Boid(Vector2(x, y)));
     printf("Added vehicle at %d, %d\n", x, y);
 }

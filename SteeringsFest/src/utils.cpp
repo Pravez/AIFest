@@ -75,7 +75,14 @@ Vector2 Vector2::scalar(Vector2 v1, double scalar) {
 }
 
 const Vector2 Vector2::operator=(const Vector2 &operand) {
-    return Vector2(operand.x, operand.y);
+    this->x = operand.x;
+    this->y = operand.y;
+    return *this;
+}
+
+void Vector2::set(double value) {
+    this->x = value;
+    this->y = value;
 }
 
 
