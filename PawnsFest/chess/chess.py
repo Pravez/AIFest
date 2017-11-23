@@ -57,6 +57,8 @@ def evalBoard(b):
 # Votre code de MiniMax et plus tard Alpha Beta ici
 # IA
 
+
+####################MINMAX#########################
 def evalEnemyTurn(b, maxdepth=3):
     print("Enemy Turn " + str(3 - maxdepth))
     print(b)
@@ -112,7 +114,90 @@ def evalFriendTurn(b, maxdepth=3):
     if temp[1] == '':
         temp[1] = friend_moves[randint(0, len(friend_moves)-1)]
     return temp
+#########################################################
 
+#######################ALPHABETA##################################
+def maxValue(first, second):
+    if first > second:
+        return first;
+    else:
+        return second;
+
+def minValue(first, second):
+    if first < second:
+        return first
+    else:
+        return second
+
+nbnodes = 0
+maxCPU = None
+
+def MaxValue(alpha, beta, b,maxdepth = 4):
+    global nbnodes
+    nbnodes += 1
+    if time.perf_counter() > maxCPU:
+        raise TimeoutError
+    if b.is_game_over():
+        return 400
+    if maxdepth == 0:
+        return evalBoard(b)
+    maxMoves = [move for move in b.legal_moves]
+    for m in maxMoves:
+        b.push(m)
+        try:
+            v = maxValue(alpha, MinValue(alpha, beta, b, maxdepth-1))
+        except TimeoutError:
+            b.pop()
+            raise TimeoutError
+        b.pop()
+        if v > alpha:
+            alpha = v
+        if alpha >= beta:
+            return beta
+    return alpha
+
+def MinValue(alpha, beta, b, maxdepth = 4):
+    global nbnodes
+    nbnodes += 1
+    if time.perf_counter() > maxCPU:
+        raise TimeoutError
+    if b.is_game_over():
+        return -400
+    if maxdepth == 0:
+        return evalBoard(b)
+    minMoves = [move for move in b.legal_moves]
+    for m in minMoves:
+        b.push(m)
+        try:
+            v = minValue(beta, MaxValue(alpha, beta, b, maxdepth-1))
+        except TimeoutError:
+            b.pop()
+            raise TimeoutError
+        b.pop()
+        if v < beta:
+            beta = v;
+        if alpha >= beta:
+            return alpha
+    return beta
+
+
+
+def IAAlphaBeta(b):
+    global nbnodes
+    nbnodes += 1
+    alpha = -800 # 800 est l'infini
+    meilleurcoup = None
+    startingDepth = 1
+    tt = time.perf_counter()
+    moves = [m for m in b.legal_moves]
+    for move in moves: # pas de coupe au premier niveau (par construction)
+        b.push(move)
+        v = MinValue(alpha, 800, b, startingDepth)
+        if v > alpha or meilleurcoup is None:
+            alpha = v
+            meilleurcoup = move
+        b.pop()
+    return meilleurcoup;
 
 board = chess.Board()
 
@@ -122,13 +207,10 @@ print('\n')
 turn = 0
 
 while 1:
-    if turn % 2 == 0:
-        value = evalFriendTurn(board)
-    else:
-        value = evalEnemyTurn(board)
+    value = IAAlphaBeta(board)
     print('-------------------')
     print(value)
-    board.push(value[1])
+    board.push(value)
     print(board)
     input('next turn ...')
     turn = turn + 1
